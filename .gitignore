@@ -31,3 +31,8 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+# Animated Cow Asset
+# https://assetstore.unity.com/packages/3d/characters/animals/animated-cow-98389
+Assets/Animated Cow/
+Assets/Animated Cow.meta
+.collabignore

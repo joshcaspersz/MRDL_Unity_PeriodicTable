@@ -1,3 +1,7 @@
+# Farty Cow - Elements Hackathon
+Requires [Animated Cow Unity Asset](https://assetstore.unity.com/packages/3d/characters/animals/animated-cow-98389)
+
+
 # Mixed Reality Design Labs
 This repo is where Microsoft's Windows Mixed Reality Design team publishes sample apps and experiments. Find out details on https://developer.microsoft.com/en-us/windows/mixed-reality/periodic_table_of_the_elements
 

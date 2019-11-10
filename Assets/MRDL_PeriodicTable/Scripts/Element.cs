@@ -12,7 +12,7 @@ namespace HoloToolkit.MRDL.PeriodicTable
 {
     public class Element : MonoBehaviour
     {
-        public static Element ActiveElement;
+        public static List<Element> ActiveElement = new List<Element>();
 
         public TextMesh ElementNumber;
         public TextMesh ElementName;
@@ -37,6 +37,7 @@ namespace HoloToolkit.MRDL.PeriodicTable
 
         private BoxCollider boxCollider;
         private Material highlightMaterial;
+        private Material selectedMaterial;
         private Material dimMaterial;
         private Material clearMaterial;
         private PresentToPlayer present;
@@ -59,7 +60,7 @@ namespace HoloToolkit.MRDL.PeriodicTable
 
         public void Highlight()
         {
-            if (ActiveElement == this)
+            if (ActiveElement.Contains(this))
                 return;
 
             for (int i = 0; i < PanelSides.Length; i++)
@@ -71,9 +72,20 @@ namespace HoloToolkit.MRDL.PeriodicTable
             BoxRenderer.sharedMaterial = highlightMaterial;
         }
 
+        public void Selected()
+        {
+            for (int i = 0; i < PanelSides.Length; i++)
+            {
+                PanelSides[i].sharedMaterial = selectedMaterial;
+            }
+            PanelBack.sharedMaterial = selectedMaterial;
+            PanelFront.sharedMaterial = selectedMaterial;
+            BoxRenderer.sharedMaterial = selectedMaterial;
+        }
+
         public void Dim()
         {
-            if (ActiveElement == this)
+            if(ActiveElement.Contains(this))
                 return;
 
             for (int i = 0; i < PanelSides.Length; i++)
@@ -102,12 +114,12 @@ namespace HoloToolkit.MRDL.PeriodicTable
 
             //Color elementNameColor = ElementName.GetComponent<MeshRenderer>().material.color;
 
-            while (Element.ActiveElement == this)
-            {
+            //while (element.ActiveElement == this)
+         //   {
                 //ElementName.GetComponent<MeshRenderer>().material.color = elementNameColor;
                 // Wait for the player to send it back
-                yield return null;
-            }
+         //       yield return null;
+        //    }
 
             animator.SetBool("Opened", false);
 
@@ -150,6 +162,18 @@ namespace HoloToolkit.MRDL.PeriodicTable
                 highlightMaterial.color = highlightMaterial.color * 1.5f;
                 typeMaterials.Add(highlightKey, highlightMaterial);
             }
+
+
+            string selectedKey = data.category.Trim() + " selected";
+            if (!typeMaterials.TryGetValue(selectedKey, out selectedMaterial))
+            {
+                selectedMaterial = new Material(dimMaterial);
+                selectedMaterial.color = Color.green;
+                typeMaterials.Add(selectedKey, selectedMaterial);
+            }
+
+
+
 
             Dim();
 

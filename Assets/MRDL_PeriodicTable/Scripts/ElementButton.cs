@@ -20,7 +20,7 @@ namespace HoloToolkit.MRDL.PeriodicTable
                 case ButtonStateEnum.ObservationTargeted:
                 case ButtonStateEnum.Targeted:
                     // If we're not the active element, light up
-                    if (Element.ActiveElement != this)
+                    if (!Element.ActiveElement.Contains(element))
                     {
                         element.Highlight();
                     }
@@ -29,15 +29,18 @@ namespace HoloToolkit.MRDL.PeriodicTable
                 case ButtonStateEnum.Pressed:
                     // User has clicked us
                     // If we're the active element button, reset ourselves
-                    if (Element.ActiveElement == element)
+                    if (Element.ActiveElement.Contains(element))
                     {
                         // If we're the current element, reset ourselves
-                        Element.ActiveElement = null;
+                        Element.ActiveElement.Remove(element);
+
+                        element.Dim();
                     }
                     else
                     {
-                        Element.ActiveElement = element;
-                        element.Open();
+                        Element.ActiveElement.Add(element);
+                        element.Selected();
+                        //element.Open();
                     }
                     break;
 
